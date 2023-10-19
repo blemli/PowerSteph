@@ -1,0 +1,26 @@
+{
+    "recommendations": [
+        "christian-kohler.path-intellisense",
+        "ms-vscode.powershell",
+        "chouzz.vscode-better-align",
+        "aaron-bond.better-comments",
+        "wmaurer.change-case",
+        "streetsidesoftware.code-spell-checker",
+        "sleistner.vscode-fileutils",
+        "streetsidesoftware.code-spell-checker-german",
+        "codezombiech.gitignore",
+        "sandcastle.vscode-open",
+        "ryu1kn.partial-diff",
+        "johnpapa.vscode-peacock",
+        "dougfinke.vscode-psstackoverflow",
+        "ionutvmi.reg",
+        "foxundermoon.shell-format",
+        "ahgood.shift-shift",
+        "gruntfuggly.todo-tree",
+        "vscode-icons-team.vscode-icons",
+        "tylerleonhardt.vscode-inline-values-powershell",
+        "fabianlauer.vs-code-xml-format",
+        "usernamehw.errorlens",
+        "bmuskalla.vscode-tldr"
+    ]
+}
