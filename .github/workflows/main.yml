@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is publishing a Module 🚀
 on: [push]
 jobs:
   Publish-Module:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Publish Module to PowerShell Gallery
       uses: pcgeek86/publish-powershell-module-action@v20
