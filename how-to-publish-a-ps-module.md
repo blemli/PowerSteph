@@ -35,7 +35,7 @@ You can Check with `Find-Module -Name MyModule`.
 
 
 ## III) Publish
-1. Publish-Module -Path . -NuGetApiKey 'YourApiKey' -Repository PSGallery
+1. Publish-Module -Path . -Repository PSGallery -NuGetApiKey 'YourApiKey'
 2. Verify: `Install-Module -Name MyModule`
 
 
