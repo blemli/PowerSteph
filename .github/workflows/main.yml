@@ -1,0 +1,12 @@
+name: Publish Powershell Module
+run-name: ${{ github.actor }} is publishing a Module 🚀
+on: [push]
+jobs:
+  Publish-Module:
+    runs-on: windows-latest
+    steps:
+    - name: Publish Module to PowerShell Gallery
+      uses: pcgeek86/publish-powershell-module-action@v20
+      id: publish-module
+      with:
+        NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
