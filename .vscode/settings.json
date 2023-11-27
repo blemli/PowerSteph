@@ -1,5 +1,7 @@
 {
     "cSpell.words": [
         "Steph"
-    ]
+    ],
+    "workbench.colorTheme": "PowerShell ISE",
+    "workbench.preferredDarkColorTheme": "Powershell_ISE_Dark"
 }
