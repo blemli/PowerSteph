@@ -10,4 +10,4 @@ jobs:
       id: publish-module
       with:
         NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
-        modulePath: "./"
+        modulePath: './PowerSteph.psd1'
