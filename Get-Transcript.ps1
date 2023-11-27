@@ -46,7 +46,7 @@
         # TranscriptPath
         [Parameter(Position = 1)]
         [string]
-        $TranscriptPath = (Join-Path $env:USERPROFILE Documents),
+        $TranscriptPath = (Join-Path $HOME Documents),
 
         # Gets the most recent transcript
         [Parameter()]
@@ -122,7 +122,7 @@ function Clear-Transcript {
         # TranscriptPath
         [Parameter(Position = 1)]
         [string]
-        $TranscriptPath = (Join-Path $env:USERPROFILE "Documents")
+        $TranscriptPath = (Join-Path $HOME "Documents")
     )
 
     # Validate the TranscriptPath parameter
