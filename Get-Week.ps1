@@ -32,3 +32,11 @@ function Get-Week(){
     Update-TypeData -TypeName "Week" -DefaultDisplayPropertySet "number" -force
     return $week
 }
+
+function Step-Week{
+    [CmdletBinding()]
+    param(
+    [Parameter(ValueFromPipeline)]$date=(get-date)
+    )
+    return get-week -Date $date.AddDays(7)
+}
