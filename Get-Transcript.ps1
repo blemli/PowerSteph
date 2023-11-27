@@ -35,7 +35,8 @@
         Get-Transcript -Last | Get-Content
         This command will retrieve the most recent PowerShell transcript from the default directory and display its contents.
 
-#>function Get-Transcript {
+#>
+function Get-Transcript {
     [CmdletBinding()]
     param (
         # Origin (ComputerName)
