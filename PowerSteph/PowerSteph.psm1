@@ -1,4 +1,5 @@
 . (Join-Path $PSScriptRoot Get-Transcript.ps1)
 . (Join-Path $PSScriptRoot .\Get-Week.ps1)
+. (Join-Path $PSScriptRoot .\Disable-MailspringUpdate.ps1)
 
-Export-ModuleMember -Function Get-Transcript, Get-Week, Step-Week, Clear-Transcript
+Export-ModuleMember -Function Get-Transcript, Get-Week, Step-Week, Clear-Transcript, Disable-MailspringUpdate, Enable-MailspringUpdate
