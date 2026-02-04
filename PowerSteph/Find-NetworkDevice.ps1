@@ -244,54 +244,72 @@ function Find-NetworkDevice {
 
     # Get ARP table
     Write-Verbose "Reading ARP cache..."
-    $arpOutput = & arp -a 2>&1
-
     $devices = @{}
 
-    foreach ($line in $arpOutput) {
-        $ip = $null
-        $mac = $null
+    if ($IsMacOS) {
+        # macOS: parse arp -a output
+        $arpOutput = & arp -a 2>&1
 
-        if ($IsMacOS) {
+        foreach ($line in $arpOutput) {
             # macOS format: ? (192.168.1.1) at aa:bb:cc:dd:ee:ff on en0 ifscope [ethernet]
-            # or: hostname (192.168.1.1) at aa:bb:cc:dd:ee:ff on en0 ifscope [ethernet]
             if ($line -match '\((\d+\.\d+\.\d+\.\d+)\)\s+at\s+([0-9a-f:]{17})') {
                 $ip = $matches[1]
                 $mac = $matches[2].ToUpper()
-            }
-        }
-        else {
-            # Windows format: 192.168.1.1     aa-bb-cc-dd-ee-ff     dynamic
-            if ($line -match '^\s*(\d+\.\d+\.\d+\.\d+)\s+([0-9a-f-]{17})\s+(\w+)') {
-                $ip = $matches[1]
-                $mac = $matches[2].ToUpper() -replace '-', ':'
-                $type = $matches[3]
 
-                if ($type -ne 'dynamic' -and $type -ne 'static') {
-                    continue
-                }
-            }
-        }
+                if ($mac -ne 'FF:FF:FF:FF:FF:FF') {
+                    # Check if IP is in our subnet
+                    $ipBytes = [System.Net.IPAddress]::Parse($ip).GetAddressBytes()
+                    $inSubnet = $true
+                    for ($i = 0; $i -lt 4; $i++) {
+                        if (($ipBytes[$i] -band $maskBytes[$i]) -ne ($baseBytes[$i] -band $maskBytes[$i])) {
+                            $inSubnet = $false
+                            break
+                        }
+                    }
 
-        if ($ip -and $mac -and $mac -ne 'FF:FF:FF:FF:FF:FF' -and $mac -notmatch '^\(incomplete\)') {
-            # Check if IP is in our subnet
-            $ipBytes = [System.Net.IPAddress]::Parse($ip).GetAddressBytes()
-            $inSubnet = $true
-            for ($i = 0; $i -lt 4; $i++) {
-                if (($ipBytes[$i] -band $maskBytes[$i]) -ne ($baseBytes[$i] -band $maskBytes[$i])) {
-                    $inSubnet = $false
-                    break
-                }
-            }
-
-            if ($inSubnet) {
-                $devices[$mac] = @{
-                    IPAddress = $ip
-                    MACAddress = $mac
+                    if ($inSubnet) {
+                        Write-Verbose "Adding device: $ip ($mac)"
+                        $devices[$mac] = @{
+                            IPAddress = $ip
+                            MACAddress = $mac
+                        }
+                    }
                 }
             }
         }
     }
+    else {
+        # Windows: use Get-NetNeighbor cmdlet (no localization issues)
+        $neighbors = Get-NetNeighbor -AddressFamily IPv4 -ErrorAction SilentlyContinue |
+            Where-Object { $_.State -ne 'Permanent' -and $_.LinkLayerAddress -ne '' }
+
+        foreach ($neighbor in $neighbors) {
+            $ip = $neighbor.IPAddress
+            $mac = ($neighbor.LinkLayerAddress -replace '-', ':').ToUpper()
+
+            if ($mac -and $mac -ne 'FF:FF:FF:FF:FF:FF' -and $mac -ne '00:00:00:00:00:00') {
+                # Check if IP is in our subnet
+                $ipBytes = [System.Net.IPAddress]::Parse($ip).GetAddressBytes()
+                $inSubnet = $true
+                for ($i = 0; $i -lt 4; $i++) {
+                    if (($ipBytes[$i] -band $maskBytes[$i]) -ne ($baseBytes[$i] -band $maskBytes[$i])) {
+                        $inSubnet = $false
+                        break
+                    }
+                }
+
+                if ($inSubnet) {
+                    Write-Verbose "Adding device: $ip ($mac)"
+                    $devices[$mac] = @{
+                        IPAddress = $ip
+                        MACAddress = $mac
+                    }
+                }
+            }
+        }
+    }
+
+    Write-Verbose "Total devices found: $($devices.Count)"
 
     # Get IPv6 neighbors if requested
     $ipv6Map = @{}

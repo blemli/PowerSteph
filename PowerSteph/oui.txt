@@ -1556,3 +1556,17 @@ B0:E2:35	Xiaomi Communications
 58:77:BF	Intel Corporate
 A4:B1:C1	Intel Corporate
 F8:E4:E3	Intel Corporate
+0C:9D:92	Hon Hai Precision Ind.
+74:AC:B9	Ubiquiti Inc
+00:11:32	Synology Inc.
+00:0F:B6	SwissVoice Ltd
+8C:45:00	Unigen DataStorage
+C8:BC:C8	ASUSTek Computer Inc.
+48:EA:62	Xiaomi Communications
+F8:ED:FC	ARRIS Group, Inc.
+80:5E:0C	Amazon Technologies Inc.
+80:5E:C0	Amazon Technologies Inc.
+D8:EB:97	TRENDnet, Inc.
+20:E5:2A	NETGEAR
+0C:AE:7D	Texas Instruments
+00:08:19	3Com Corporation
