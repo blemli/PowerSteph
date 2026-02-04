@@ -226,14 +226,18 @@ function Find-NetworkDevice {
         $isMac = $IsMacOS
 
         # Use parallel ping for speed
-        $ips | ForEach-Object -ThrottleLimit 50 -Parallel {
-            if ($using:isMac) {
-                ping -c 1 -W 1 $_ 2>&1 | Out-Null
+        try {
+            $ips | ForEach-Object -ThrottleLimit 50 -Parallel {
+                if ($using:isMac) {
+                    ping -c 1 -W 1 $_ 2>&1 | Out-Null
+                }
+                else {
+                    ping -n 1 -w 500 $_ 2>&1 | Out-Null
+                }
             }
-            else {
-                ping -n 1 -w 500 $_ 2>&1 | Out-Null
-            }
-        } -ErrorAction SilentlyContinue
+        } catch {
+            # Ignore ping errors
+        }
 
         Start-Sleep -Milliseconds 500
     }
