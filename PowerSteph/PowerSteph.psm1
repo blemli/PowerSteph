@@ -5,5 +5,7 @@
 . (Join-Path $PSScriptRoot .\Get-1PasswordItem.ps1)
 . (Join-Path $PSScriptRoot .\Find-NetworkDevice.ps1)
 . (Join-Path $PSScriptRoot .\Install-PowerShell7.ps1)
+. (Join-Path $PSScriptRoot .\New-Shortcut.ps1)
+. (Join-Path $PSScriptRoot .\Set-Shortcut.ps1)
 
-Export-ModuleMember -Function Get-Transcript, Get-Week, Step-Week, Clear-Transcript, Disable-MailspringUpdate, Enable-MailspringUpdate, Publish-MyModule, Get-1PasswordItem, Find-NetworkDevice, Install-PowerShell7, Uninstall-PowerShell7
+Export-ModuleMember -Function Get-Transcript, Get-Week, Step-Week, Clear-Transcript, Disable-MailspringUpdate, Enable-MailspringUpdate, Publish-MyModule, Get-1PasswordItem, Find-NetworkDevice, Install-PowerShell7, Uninstall-PowerShell7, New-Shortcut, Set-Shortcut
